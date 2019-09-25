@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Search Product</title>
-    <link rel="stylesheet" href="search.css">
+
 </head>
 <body>
 
 <div class="container">
-    <form th:action="@{/search}" method="POST">
-        <input type="text" name="searchProduct">
+    <form th:action="@{/search}" method="get">
+        <input type="search" name="searchProduct">
         <input type="submit" value="Search">
     </form>
 </div>
+
 
 </body>
 </html>

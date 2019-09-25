@@ -6,13 +6,21 @@
 </head>
 <body>
 <div class="container-product">
-    <form th:object="${products/list}" th:action="@{products}" method="get">
-
-        <table>
-            <li>
-            </li>
-        </table>
-    </form>
+    <table border="2">
+        <tr><form>
+            <td th:text="Name"></td>
+            <td th:text="Price"></td>
+            <td th:text="Description"></td>
+        </form>
+        </tr>
+        <th:block th:each="p : ${products}">
+            <tr>
+                <td th:text="${p.getName()}"></td>
+                <td th:text="${p.getPrice()}"></td>
+                <td th:text="${p.getDescription()}"></td>
+            </tr>
+        </th:block>
+    </table>
 </div>
 
 </body>

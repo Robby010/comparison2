@@ -6,12 +6,43 @@
 </head>
 <body>
 
-<div class="container-product">
-    <form th:object="${user/list}" th:action="@{user}" method="get">
+<div class="container">
+    <table border="2">
+        <tr>
+            <td th:text="Username"></td>
+            <td th:text="Password"></td>
+            <td th:text="Email"></td>
+        </tr>
+        <th:block th:each="u : ${users}">
+            <tr>
+                <td th:text="${u.getUserName()}"></td>
+                <td th:text="${u.getPassword()}"></td>
+                <td th:text="${u.getEmail()}"></td>
+                <td>
+                    <form action="#" th:action="@{/user/delete/} + ${u.getId()}" method="post">
+                        <input type="submit" value="Delete"/>
+                    </form>
+                </td>
+                <td>
+                    <form action="#" th:action="@{/user/update/} + ${u.getId()}" method="get">
+                        <input type="submit" value="Edit"/>
+                    </form>
+                </td>
+            </tr>
+        </th:block>
+    </table>
 
+    </br>
+
+    <form th:action="@{/user/create}" th:object="${user}" method="post">
         <table>
-            <li>
-            </li>
+            <tr>
+                <td><input type="text" placeholder="User Name" th:field="*{userName}"></td>
+                <td><input type="text" placeholder="Password" th:field="*{email}"></td>
+                <td><input type="email" placeholder="Email" th:field="*{password}"></td>
+                <input type="hidden" th:field="*{id}">
+                <td><input type="submit" value="Save"/></td>
+            </tr>
         </table>
     </form>
 </div>

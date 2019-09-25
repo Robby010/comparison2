@@ -6,15 +6,13 @@
 </head>
 <body>
 <div class="container-product">
-    <form th:action="${user/create}" th:object="@{user}" method="post">
-        <input type="text" placeholder="User Name" ><br>
-        <input type="email" placeholder="Email"><br>
-        <input type="password" placeholder="Password"><br>
-        <button type="Create">Create</button>
-        <table>
-            <li>
-            </li>
-        </table>
+    <form th:action="@{/user/create}" th:object="${u}" method="post">
+        <tr>
+            <td><input type="text" placeholder="User Name" ></td><br>
+            <td><input type="email" placeholder="Email"></td><br>
+            <td><input type="password" placeholder="Password"></td><br>
+            <td><button type="Create">Create</button></td>
+        </tr>
     </form>
 </div>
 </body>

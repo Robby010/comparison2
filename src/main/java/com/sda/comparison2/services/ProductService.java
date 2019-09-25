@@ -14,7 +14,7 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public List<Product> listProducts(){
+    public List<Product> findAll(){
 
         return productRepository.findAll();
     }
@@ -22,4 +22,6 @@ public class ProductService {
     public Product save(Product product) {
         return productRepository.save(product);
     }
+
+
 }
