@@ -1,45 +1,58 @@
 package com.sda.comparison2.scraper;
 
+import com.sda.comparison2.entity.Product;
+import com.sda.comparison2.services.ProductService;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+@Component
 public class EmagScraper {
 
-    public static void main(String[] args) {
+    @Autowired
+    private ProductService productService;
 
-        search("boxa mica");
+    public void search(String product) {
+        System.setProperty("webdriver.chrome.driver","C:/chromedriver/chromedriver.exe");
+        ChromeOptions options = new ChromeOptions();
 
-        search("casti telefon");
-    }
+        options.addArguments("headless");
+        options.addArguments("window-size=1200x600");
+        WebDriver driver = new ChromeDriver(options);
 
-    public static void search(String product) {
-        System.setProperty("webdriver.gecko.driver", "C:/geckodriver/geckodriver.exe");
-        WebDriver driver = new FirefoxDriver();
 
         JavascriptExecutor js = (JavascriptExecutor)driver;
         //The website that we use for the search
         driver.get("https://www.emag.ro/search/" + product);
 
         //Gets the search parameters
-        WebElement element = driver.findElement(By.id("main-search"));
-
-        //adds the word in the search box
-        element.sendKeys("pantaloni");
-
-
-        //submits the the searched word
-        element.submit();
-        element.sendKeys(Keys.ENTER);
-        System.out.println(driver.getPageSource());
-
-        System.out.println("Page title is: " + driver.getTitle());
+        List<WebElement> productName = driver.findElements(By.className("card-section-mid"));
+        List<WebElement> productDescriptions = driver.findElements(By.className("product-title"));
+        List<WebElement> productPrices = driver.findElements(By.className("product-new-price"));
+        List<WebElement> productUrl = driver.findElements(By.className("js-product-url"));
 
 
+        for(int i=0; i<5; i++) {
+            String name = productName.get(i).getText();
+            String desc= productDescriptions.get(i).getText();
+            String fullPrice = productPrices.get(i).getText();
+            String price = fullPrice.substring(0, fullPrice.length() - 6 );
+            String url = productUrl.get(i).getAttribute("href");
 
-        //Gets the product name and short description
-        WebElement element1 = driver.findElement(By.className("item-heading"));
+            Product p = new Product();
+            p.setName(name);
+            p.setDescription(desc);
+            p.setPrice(price);
+            p.setUrl(url);
 
-        System.out.println(element1.getText());
+            productService.save(p);
+
+        }
 
 
         //Closes the search query

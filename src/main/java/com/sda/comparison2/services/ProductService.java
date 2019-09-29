@@ -23,5 +23,7 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-
+    public List<Product> findByName(String productName) {
+        return productRepository.findByNameContaining(productName);
+    }
 }

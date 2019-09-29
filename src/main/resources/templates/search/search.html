@@ -3,17 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <title>Search Product</title>
+        <link rel="stylesheet" href="search.css">
+
+    <!--    <script type="text/javascript" src="/webjars/jquery/3.4.1/jquery.min.js"></script>-->
+    <!--    <script type="text/javascript" src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+    <!--    <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>-->
 
 </head>
 <body>
 
-<div class="container">
-    <form th:action="@{/search}" method="get">
-        <input type="search" name="searchProduct">
+<div class="container" align="center">
+    <form th:action="@{/search}" method="post">
+       <div border="2"> <input type="search" name="productName"></div>
         <input type="submit" value="Search">
     </form>
 </div>
+<th:block th:each="u : ${users}">
+    <tr>
+        <td th:text="${u.getUserName()}"></td>
+        <td th:text="${u.getPassword()}"></td>
+        <td th:text="${u.getEmail()}"></td>
+</th:block>
+<div>
+    <form th:action="@{/login}" method="post">
+        <div><label> User Name : <input type="text" name="username"/> </label></div>
+        <div><label> Password: <input type="password" name="password"/> </label></div>
+        <div><input type="submit" value="Sign In"/></div>
+    </form>
+</div>
+<form th:action="@{login/create}" method="=post"></form>
+<div>
+    <button type="submit" value="text">Create new user</button>
+</div>
 
+<table border="2">
+
+    <tr>
+        <form>
+            <td th:text="Name"></td>
+            <td th:text="Price"></td>
+            <td th:text="Description"></td>
+            <td th:text="Link"></td>
+        </form>
+    </tr>
+
+    <th:block th:each="p : ${productList}">
+        <tr>
+            <td th:text="${p.getName()}"></td>
+            <td th:text="${p.getPrice()}"></td>
+            <td th:text="${p.getDescription()}"></td>
+            <td><a th:href="${p.getUrl()}">Click</a></td>
+        </tr>
+    </th:block>
+</table>
 
 </body>
 </html>

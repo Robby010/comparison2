@@ -19,12 +19,12 @@
                 <td th:text="${u.getPassword()}"></td>
                 <td th:text="${u.getEmail()}"></td>
                 <td>
-                    <form action="#" th:action="@{/user/delete/} + ${u.getId()}" method="post">
+                    <form action="#" th:action="@{/user/delete/} + ${u.getUserId()}" method="post">
                         <input type="submit" value="Delete"/>
                     </form>
                 </td>
                 <td>
-                    <form action="#" th:action="@{/user/update/} + ${u.getId()}" method="get">
+                    <form action="#" th:action="@{/user/update/} + ${u.getUserId()}" method="get">
                         <input type="submit" value="Edit"/>
                     </form>
                 </td>
@@ -38,15 +38,18 @@
         <table>
             <tr>
                 <td><input type="text" placeholder="User Name" th:field="*{userName}"></td>
-                <td><input type="text" placeholder="Password" th:field="*{email}"></td>
+                <td><input type="password" placeholder="Password" th:field="*{email}"></td>
                 <td><input type="email" placeholder="Email" th:field="*{password}"></td>
-                <input type="hidden" th:field="*{id}">
+                <input type="hidden" th:field="*{userId}">
                 <td><input type="submit" value="Save"/></td>
             </tr>
         </table>
     </form>
 </div>
 
+<form th:actio="@{/logout}" method="post">
+    <input type="submit" value="Sign out">
+</form>
 
 </body>
 </html>
